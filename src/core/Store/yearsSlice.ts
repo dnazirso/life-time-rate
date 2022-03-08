@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import yearTableBuilder from "./yearTableBuilder/index.";
 
 export type Note = {
   title: string;
@@ -33,14 +34,7 @@ const yearsSlice = createSlice({
     },
     setYears: (state, { payload }: { payload: { birthdate: number } }) => {
       state.birthdate = payload.birthdate;
-      state.years = Array.from({ length: 90 }, (_, i) => i).map((age) => ({
-        age,
-        date: new Date(payload.birthdate).setFullYear(
-          new Date(payload.birthdate).getFullYear() + age
-        ),
-        joy: 0.5,
-        notes: [],
-      }));
+      state.years = yearTableBuilder(payload.birthdate);
     },
   },
 });
