@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignInContext, { User } from "../../core/SignInContext";
 import { useAppDispatch } from "../../core/Store";
+import { setPicture } from "../../core/Store/cameraSlice";
 import { setPage } from "../../core/Store/appSlice";
 import { setWeeks } from "../../core/Store/weeksSlice";
 import { setYears } from "../../core/Store/yearsSlice";
@@ -54,13 +55,15 @@ export default function Login() {
         videoConstraints={videoConstraints}
       >
         {({ getScreenshot }) => (
-          <button
+          <Button
             onClick={() => {
-              const imageSrc = getScreenshot()
+              const payload = getScreenshot();
+              if (!payload) return;
+              dispatch(setPicture(payload));
             }}
           >
             CAPTURE
-          </button>
+          </Button>
         )}
       </Webcam>
       <TextField
