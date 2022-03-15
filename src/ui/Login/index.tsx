@@ -6,6 +6,13 @@ import { useAppDispatch } from "../../core/Store";
 import { setPage } from "../../core/Store/appSlice";
 import { setWeeks } from "../../core/Store/weeksSlice";
 import { setYears } from "../../core/Store/yearsSlice";
+import Webcam from "react-webcam";
+
+const videoConstraints = {
+  width: 800,
+  height: 600,
+  facingMode: "user"
+};
 
 export default function Login() {
   const navigate = useNavigate();
@@ -39,6 +46,23 @@ export default function Login() {
 
   return (
     <Stack component="form" noValidate spacing={3}>
+      <Webcam
+        audio={false}
+        height={720}
+        screenshotFormat="image/jpeg"
+        width={1280}
+        videoConstraints={videoConstraints}
+      >
+        {({ getScreenshot }) => (
+          <button
+            onClick={() => {
+              const imageSrc = getScreenshot()
+            }}
+          >
+            CAPTURE
+          </button>
+        )}
+      </Webcam>
       <TextField
         placeholder="Name"
         label="Name"
