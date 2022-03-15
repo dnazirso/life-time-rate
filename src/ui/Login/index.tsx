@@ -8,6 +8,7 @@ import { setPage } from "../../core/Store/appSlice";
 import { setWeeks } from "../../core/Store/weeksSlice";
 import { setYears } from "../../core/Store/yearsSlice";
 import Webcam from "react-webcam";
+import { useAppSelector } from "../../core/Store";
 
 const videoConstraints = {
   width: 800,
@@ -19,6 +20,7 @@ export default function Login() {
   const navigate = useNavigate();
   const context = useContext(SignInContext);
   const dispatch = useAppDispatch();
+  const { photo } = useAppSelector((state) => state.camera);
 
   useEffect(() => {
     if (
@@ -47,25 +49,27 @@ export default function Login() {
 
   return (
     <Stack component="form" noValidate spacing={3}>
-      <Webcam
-        audio={false}
-        height={720}
-        screenshotFormat="image/jpeg"
-        width={1280}
-        videoConstraints={videoConstraints}
-      >
-        {({ getScreenshot }) => (
-          <Button variant="contained"
-            onClick={() => {
-              const payload = getScreenshot();
-              if (!payload) return;
-              dispatch(setPicture(payload));
-            }}
-          >
-            CAPTURE
-          </Button>
-        )}
-      </Webcam>
+      {(photo.length > 0) ? <img src={photo} /> :
+        <Webcam
+          audio={false}
+          height={720}
+          screenshotFormat="image/jpeg"
+          width={1280}
+          videoConstraints={videoConstraints}
+        >
+          {({ getScreenshot }) => (
+            <Button variant="contained"
+              onClick={() => {
+                const payload = getScreenshot();
+                if (!payload) return;
+                dispatch(setPicture(payload));
+              }}
+            >
+              CAPTURE
+            </Button>
+          )}
+        </Webcam>
+      }
       <TextField
         placeholder="Name"
         label="Name"
