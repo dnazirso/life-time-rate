@@ -55,7 +55,7 @@ export default function Login() {
         videoConstraints={videoConstraints}
       >
         {({ getScreenshot }) => (
-          <Button
+          <Button variant="contained"
             onClick={() => {
               const payload = getScreenshot();
               if (!payload) return;
