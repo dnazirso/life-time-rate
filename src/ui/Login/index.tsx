@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../core/Store";
 import { setPage } from "../../core/Store/appSlice";
 import { setWeeks } from "../../core/Store/weeksSlice";
 import { setYears } from "../../core/Store/yearsSlice";
+import Camera from "./Camera";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ export default function Login() {
 
   return (
     <Stack component="form" noValidate spacing={3}>
+      <Camera />
       <TextField
         placeholder="Name"
         label="Name"
