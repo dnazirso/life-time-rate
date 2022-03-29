@@ -1,10 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Note } from "./weeksSlice";
 import yearTableBuilder from "./yearTableBuilder/index.";
-
-export type Note = {
-  title: string;
-  date: number;
-};
 
 export type Year = {
   age: number;
@@ -36,9 +32,18 @@ const yearsSlice = createSlice({
       state.birthdate = payload.birthdate;
       state.years = yearTableBuilder(payload.birthdate);
     },
+    setCurrentYear: (state) => {
+      const currentdate = new Date();
+      const age = currentdate.getFullYear() - new Date(state.birthdate).getFullYear();
+
+      state.year = age;
+    },
+    setYearNote: (state, { payload }: PayloadAction<Note>) => {
+      state.years[state.year].notes.push(payload);
+    },
   },
 });
 
-export const { setYear, setYears } = yearsSlice.actions;
+export const { setYear, setYears, setCurrentYear, setYearNote } = yearsSlice.actions;
 
 export default yearsSlice.reducer;

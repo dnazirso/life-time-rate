@@ -1,8 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Note = {
-  title: string;
   date: number;
+  content: string;
+  joy: number;
 };
 
 export type Week = {
@@ -35,9 +36,24 @@ const weeksSlice = createSlice({
         notes: [],
       }));
     },
+    setCurrentWeek: (state) => {
+      const currentdate = new Date();
+      const oneJan = new Date(currentdate.getFullYear(), 0, 1);
+      const numberOfDays = Math.floor((currentdate.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000));
+      const result = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
+
+      state.week = result;
+    },
+    setWeekNotes: (state, { payload }: PayloadAction<Note>) => {
+      state.weeks[state.week].notes.push(payload);
+    },
   },
 });
 
-export const { setWeek, setWeeks } = weeksSlice.actions;
+export const getCurrentWeek = () => {
+  return;
+};
+
+export const { setWeek, setWeeks, setWeekNotes, setCurrentWeek } = weeksSlice.actions;
 
 export default weeksSlice.reducer;

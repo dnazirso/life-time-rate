@@ -5,14 +5,14 @@ import SignInContext, { User } from "../../core/SignInContext";
 import { useAppDispatch } from "../../core/Store";
 import { setPicture } from "../../core/Store/cameraSlice";
 import { setPage } from "../../core/Store/appSlice";
-import { setWeeks } from "../../core/Store/weeksSlice";
-import { setYears } from "../../core/Store/yearsSlice";
+import { setCurrentWeek, setWeeks } from "../../core/Store/weeksSlice";
+import { setCurrentYear, setYears } from "../../core/Store/yearsSlice";
 import Webcam from "react-webcam";
 
 const videoConstraints = {
   width: 800,
   height: 600,
-  facingMode: "user"
+  facingMode: "user",
 };
 
 export default function Login() {
@@ -21,10 +21,7 @@ export default function Login() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (
-      new Date(context.user.birthdate).toLocaleDateString() !==
-      new Date("10/10/1910").toLocaleDateString()
-    ) {
+    if (new Date(context.user.birthdate).toLocaleDateString() !== new Date("10/10/1910").toLocaleDateString()) {
       navigate("/years");
     }
   }, [context, navigate]);
@@ -32,7 +29,9 @@ export default function Login() {
   const handleLogin = () => {
     context.setUser(user);
     dispatch(setYears({ birthdate: user.birthdate }));
+    dispatch(setCurrentYear());
     dispatch(setWeeks({ birthdate: user.birthdate }));
+    dispatch(setCurrentWeek());
     dispatch(setPage("/years"));
     navigate("/years");
   };
@@ -42,20 +41,14 @@ export default function Login() {
     birthdate: new Date("10/10/1910").getTime(),
   });
 
-  const canContinue =
-    user.name.length > 0 && user.birthdate !== new Date("10/10/1910").getTime();
+  const canContinue = user.name.length > 0 && user.birthdate !== new Date("10/10/1910").getTime();
 
   return (
     <Stack component="form" noValidate spacing={3}>
-      <Webcam
-        audio={false}
-        height={720}
-        screenshotFormat="image/jpeg"
-        width={1280}
-        videoConstraints={videoConstraints}
-      >
+      <Webcam audio={false} height={720} screenshotFormat="image/jpeg" width={1280} videoConstraints={videoConstraints}>
         {({ getScreenshot }) => (
-          <Button variant="contained"
+          <Button
+            variant="contained"
             onClick={() => {
               const payload = getScreenshot();
               if (!payload) return;
@@ -90,12 +83,7 @@ export default function Login() {
           });
         }}
       />
-      <Button
-        disabled={!canContinue}
-        onClick={handleLogin}
-        variant="outlined"
-        sx={{ py: 1.75 }}
-      >
+      <Button disabled={!canContinue} onClick={handleLogin} variant="outlined" sx={{ py: 1.75 }}>
         Login
       </Button>
     </Stack>
