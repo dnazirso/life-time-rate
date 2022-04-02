@@ -4,9 +4,10 @@ import { setYears } from "../../core/Store/yearsSlice";
 import { setWeeks } from "../../core/Store/weeksSlice";
 import { setPage } from "../../core/Store/appSlice";
 import { useContext, useEffect, useState } from "react";
-import SignInContext, { User } from "../../core/SignInContext";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../core/Store";
+import {User} from "../../core/SignInContext";
+
 
 export default function Profile() {
 
@@ -16,9 +17,9 @@ export default function Profile() {
 
     useEffect(() => {
         // @ts-ignore
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = JSON.parse(localStorage.getItem('context'));
         if (user) {
-            setUser(user);
+            setUser(user.user);
         }
 
     }, [navigate]);
@@ -40,6 +41,16 @@ export default function Profile() {
         user.name.length > 0 && user.birthdate !== new Date("10/10/1910").getTime();
 
 
+    function format(convertDate: number) {
+        let date = new Date(convertDate);
+
+        var day = ('0' + date.getDate()).slice(-2);
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear();
+
+        return year + '-' + month + '-' + day;
+    }
+
     return (
         <Container>
             <Stack component="form" noValidate spacing={3}>
@@ -58,7 +69,7 @@ export default function Profile() {
                     id="date"
                     type="date"
                     label="Birthdate"
-                    value={user.birthdate}
+                    value={format(user.birthdate)}
                     InputLabelProps={{
                         shrink: true,
                     }}
