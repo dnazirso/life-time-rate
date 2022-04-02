@@ -1,6 +1,8 @@
 import { Logout } from "@mui/icons-material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {
   AppBar,
+  Button,
   Container,
   IconButton,
   Toolbar,
@@ -12,16 +14,24 @@ import SignInContext from "../../core/SignInContext";
 import { useAppDispatch, useAppSelector } from "../../core/Store";
 import { setPage } from "../../core/Store/appSlice";
 
+
 export default function Header({ signed }: { signed: boolean }) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const context = useContext(SignInContext);
   const { title } = useAppSelector((state) => state.app);
+  const { page } = useAppSelector((state) => state.app);
+
 
   const handleLogout = () => {
     context.logout();
     dispatch(setPage("/"));
     navigate("/");
+  };
+
+  const handleChange = () => {
+    dispatch(setPage("/"));
+    navigate("/Profile");
   };
 
   return (
@@ -37,6 +47,13 @@ export default function Header({ signed }: { signed: boolean }) {
             onClick={handleLogout}
           >
             <Logout />
+          </IconButton>
+          <IconButton
+            size="large"
+            sx={{ display: signed ? "" : "none" }}
+            onClick={handleChange}
+          >
+            <AccountCircleIcon />
           </IconButton>
         </Toolbar>
       </Container>

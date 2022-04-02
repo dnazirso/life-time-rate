@@ -3,6 +3,7 @@ import Login from "../Login";
 import Today from "../Today";
 import Weeks from "../Weeks";
 import Years from "../Years";
+import Profile from "../Profile"
 
 export default function Routes() {
   const routes = useRoutes([
@@ -21,6 +22,10 @@ export default function Routes() {
     {
       path: "/today",
       element: <Today />,
+    },
+    {
+      path: "/profile",
+      element: <Login />,
     },
   ]);
   return routes;
