@@ -1,4 +1,4 @@
-import {Button, Stack, TextField} from "@mui/material";
+import {Button, Container, Stack, TextField} from "@mui/material";
 import Camera from "../Shared/Camera";
 import {setYears} from "../../core/Store/yearsSlice";
 import {setWeeks} from "../../core/Store/weeksSlice";
@@ -47,41 +47,43 @@ export default function Profile() {
 
 
     return (
-        <Stack component="form" noValidate spacing={3}>
-            <Camera />
-            <TextField
-                placeholder={user.name}
-                label="Name"
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                onChange={(e) => {
-                    setUser({ ...user, name: e.target.value });
-                }}
-            />
-            <TextField
-                id="date"
-                type="date"
-                label="Birthdate"
-                value={user.birthdate}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                onChange={(e) => {
-                    setUser({
-                        ...user,
-                        birthdate: new Date(e.target.value).getTime(),
-                    });
-                }}
-            />
-            <Button
-                disabled={!canContinue}
-                onClick={handleProfil}
-                variant="outlined"
-                sx={{ py: 1.75 }}
-            >
-                Valider
-            </Button>
-        </Stack>
+        <Container>
+            <Stack component="form" noValidate spacing={3}>
+                <Camera />
+                <TextField
+                    placeholder={user.name}
+                    label="Name"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    onChange={(e) => {
+                        setUser({ ...user, name: e.target.value });
+                    }}
+                />
+                <TextField
+                    id="date"
+                    type="date"
+                    label="Birthdate"
+                    value={user.birthdate}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    onChange={(e) => {
+                        setUser({
+                            ...user,
+                            birthdate: new Date(e.target.value).getTime(),
+                        });
+                    }}
+                />
+                <Button
+                    disabled={!canContinue}
+                    onClick={handleProfil}
+                    variant="outlined"
+                    sx={{ py: 1.75 }}
+                >
+                    Valider
+                </Button>
+            </Stack>
+        </Container>
     );
 }
