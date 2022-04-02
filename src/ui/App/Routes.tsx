@@ -25,7 +25,7 @@ export default function Routes() {
     },
     {
       path: "/profile",
-      element: <Login />,
+      element: <Profile />,
     },
   ]);
   return routes;

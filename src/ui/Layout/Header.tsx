@@ -1,5 +1,4 @@
 import { Logout } from "@mui/icons-material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {
   AppBar,
   Button,
@@ -7,12 +6,15 @@ import {
   IconButton,
   Toolbar,
   Typography,
+  Box,
+  BottomNavigation,
+  BottomNavigationAction,
 } from "@mui/material";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import SignInContext from "../../core/SignInContext";
 import { useAppDispatch, useAppSelector } from "../../core/Store";
-import { setPage } from "../../core/Store/appSlice";
+import { Page, setPage } from "../../core/Store/appSlice";
 
 
 export default function Header({ signed }: { signed: boolean }) {
@@ -29,11 +31,6 @@ export default function Header({ signed }: { signed: boolean }) {
     navigate("/");
   };
 
-  const handleChange = () => {
-    dispatch(setPage("/"));
-    navigate("/Profile");
-  };
-
   return (
     <AppBar position="sticky">
       <Container>
@@ -47,13 +44,6 @@ export default function Header({ signed }: { signed: boolean }) {
             onClick={handleLogout}
           >
             <Logout />
-          </IconButton>
-          <IconButton
-            size="large"
-            sx={{ display: signed ? "" : "none" }}
-            onClick={handleChange}
-          >
-            <AccountCircleIcon />
           </IconButton>
         </Toolbar>
       </Container>
