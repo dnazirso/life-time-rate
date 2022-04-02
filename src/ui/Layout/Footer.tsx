@@ -3,7 +3,6 @@ import {
   CalendarToday,
   PermContactCalendar,
 } from "@mui/icons-material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -45,11 +44,6 @@ export default function Footer({ signed }: { signed: boolean }) {
         label="Today"
         value="/today"
         icon={<CalendarToday />}
-      />
-      <BottomNavigationAction
-        label="Profile"
-        value="/profile"
-        icon={<AccountCircleIcon />}
       />
     </Box>
   );

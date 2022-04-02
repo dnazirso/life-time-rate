@@ -10,6 +10,7 @@ import {
   BottomNavigation,
   BottomNavigationAction,
 } from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import SignInContext from "../../core/SignInContext";
@@ -31,6 +32,11 @@ export default function Header({ signed }: { signed: boolean }) {
     navigate("/");
   };
 
+  const handleProfile = () => {
+    dispatch(setPage("/profile"));
+    navigate("/profile");
+  };
+
   return (
     <AppBar position="sticky">
       <Container>
@@ -38,6 +44,13 @@ export default function Header({ signed }: { signed: boolean }) {
           <Typography component="div" variant="h5" sx={{ flexGrow: 1 }} px={2}>
             {title || "Life Calendar"}
           </Typography>
+          <IconButton
+            size="large"
+            sx={{ display: signed ? "" : "none" }}
+            onClick={handleProfile}
+          >
+            <AccountCircleIcon />
+          </IconButton>
           <IconButton
             size="large"
             sx={{ display: signed ? "" : "none" }}
