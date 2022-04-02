@@ -6,13 +6,14 @@ import { setPage } from "../../core/Store/appSlice";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../core/Store";
-import {User} from "../../core/SignInContext";
+import SignInContext, {User} from "../../core/SignInContext";
 
 
 export default function Profile() {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const context = useContext(SignInContext);
 
 
     useEffect(() => {
@@ -22,10 +23,11 @@ export default function Profile() {
             setUser(user.user);
         }
 
-    }, [navigate]);
+    }, [context,navigate]);
 
 
     const handleProfil = () => {
+        context.setUser(user);
         dispatch(setYears({ birthdate: user.birthdate }));
         dispatch(setWeeks({ birthdate: user.birthdate }));
         dispatch(setPage("/years"));
