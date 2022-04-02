@@ -20,10 +20,16 @@ export default function Profile() {
         if (user) {
             setUser(user) ;
         }
+        if (
+            new Date(context.user.birthdate).toLocaleDateString() !==
+            new Date("10/10/1910").toLocaleDateString()
+        ) {
+            navigate("/years");
+        }
     }, [context, navigate]);
 
 
-    const handleLogin = () => {
+    const handleProfil = () => {
         context.setUser(user);
         dispatch(setYears({ birthdate: user.birthdate }));
         dispatch(setWeeks({ birthdate: user.birthdate }));
@@ -57,6 +63,7 @@ export default function Profile() {
                 id="date"
                 type="date"
                 label="Birthdate"
+                value={user.birthdate}
                 InputLabelProps={{
                     shrink: true,
                 }}
@@ -69,11 +76,11 @@ export default function Profile() {
             />
             <Button
                 disabled={!canContinue}
-                onClick={handleLogin}
+                onClick={handleProfil}
                 variant="outlined"
                 sx={{ py: 1.75 }}
             >
-                Login
+                Valider
             </Button>
         </Stack>
     );
