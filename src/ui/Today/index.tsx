@@ -7,10 +7,19 @@ import {
   TextField,
   Typography,
   Container,
+  styled,
 } from "@mui/material";
 import { useState } from "react";
+import { useAppDispatch } from "../../core/Store";
+import { setImg } from "../../core/Store/imageUploadSlice";
+
+const Input = styled("input")({
+  display: "none",
+});
 
 export default function Today() {
+  const dispatch = useAppDispatch();
+
   const [value, setValue] = useState<number>(50);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
@@ -43,6 +52,27 @@ export default function Today() {
           </Grid>
           <Grid item xs />
           <Grid item>
+            <label htmlFor="outlined-button-file">
+              <Input
+                accept="image/*"
+                id="outlined-button-file"
+                multiple
+                type="file"
+              />
+              {({ getImgFile }: { getImgFile: any }) => (
+                <Button
+                  variant="contained"
+                  component="span"
+                  onClick={() => {
+                    const payload = getImgFile();
+                    if (!payload) return payload;
+                    dispatch(setImg(payload));
+                  }}
+                >
+                  Upload
+                </Button>
+              )}
+            </label>
             <Button variant="outlined" color="primary">
               Log
             </Button>

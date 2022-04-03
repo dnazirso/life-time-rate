@@ -4,6 +4,7 @@ import appSlice from "./appSlice";
 import weeksSlice from "./weeksSlice";
 import yearsSlice from "./yearsSlice";
 import cameraSlice from "./cameraSlice";
+import imageUploadSlice from "./imageUploadSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     app: appSlice,
     years: yearsSlice,
     weeks: weeksSlice,
+    img: imageUploadSlice,
   },
 });
 
