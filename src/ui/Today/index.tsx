@@ -1,4 +1,4 @@
-import { SentimentVerySatisfied, MoodBad, Save } from '@mui/icons-material';
+import { SentimentVerySatisfied, MoodBad, Save, Close } from '@mui/icons-material';
 import {
   Stack,
   Slider,
@@ -8,11 +8,14 @@ import {
   Typography,
   Container,
   Alert,
+  Collapse, 
+  IconButton,
 } from "@mui/material";
 import React, { useState } from "react";
 
 export default function Today() {
   const [value, setValue] = useState<number>(50);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number);
@@ -21,7 +24,7 @@ export default function Today() {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     window.location.reload();
-    <Alert severity="success">Your mood has been saved !</Alert>
+    setOpen(true);
   }
 
   return (
@@ -59,6 +62,25 @@ export default function Today() {
             />
           </Grid>
           <Grid item xs />
+          <Collapse in={open}>
+              <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <Close fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+              >
+                Your mood has been saved !
+              </Alert>
+          </Collapse>
           <Grid item>
             <Button 
               variant="outlined" 
