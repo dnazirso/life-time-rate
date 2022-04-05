@@ -7,13 +7,8 @@ import { setPicture } from "../../core/Store/cameraSlice";
 import { setPage } from "../../core/Store/appSlice";
 import { setWeeks } from "../../core/Store/weeksSlice";
 import { setYears } from "../../core/Store/yearsSlice";
-import Webcam from "react-webcam";
-
-const videoConstraints = {
-  width: 800,
-  height: 600,
-  facingMode: "user"
-};
+import { useAppSelector } from "../../core/Store";
+import Camera from "../Shared/Camera";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -46,58 +41,43 @@ export default function Login() {
     user.name.length > 0 && user.birthdate !== new Date("10/10/1910").getTime();
 
   return (
-    <Stack component="form" noValidate spacing={3}>
-      <Webcam
-        audio={false}
-        height={720}
-        screenshotFormat="image/jpeg"
-        width={1280}
-        videoConstraints={videoConstraints}
-      >
-        {({ getScreenshot }) => (
-          <Button variant="contained"
-            onClick={() => {
-              const payload = getScreenshot();
-              if (!payload) return;
-              dispatch(setPicture(payload));
-            }}
-          >
-            CAPTURE
-          </Button>
-        )}
-      </Webcam>
-      <TextField
-        placeholder="Name"
-        label="Name"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={(e) => {
-          setUser({ ...user, name: e.target.value });
-        }}
-      />
-      <TextField
-        id="date"
-        type="date"
-        label="Birthdate"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={(e) => {
-          setUser({
-            ...user,
-            birthdate: new Date(e.target.value).getTime(),
-          });
-        }}
-      />
-      <Button
-        disabled={!canContinue}
-        onClick={handleLogin}
-        variant="outlined"
-        sx={{ py: 1.75 }}
-      >
-        Login
-      </Button>
-    </Stack>
+
+    <>
+      <Camera />
+      <Stack component="form" noValidate spacing={3}>
+        <TextField
+          placeholder="Name"
+          label="Name"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => {
+            setUser({ ...user, name: e.target.value });
+          }}
+        />
+        <TextField
+          id="date"
+          type="date"
+          label="Birthdate"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => {
+            setUser({
+              ...user,
+              birthdate: new Date(e.target.value).getTime(),
+            });
+          }}
+        />
+        <Button
+          disabled={!canContinue}
+          onClick={handleLogin}
+          variant="outlined"
+          sx={{ py: 1.75 }}
+        >
+          Login
+        </Button>
+      </Stack>
+    </>
   );
 }
