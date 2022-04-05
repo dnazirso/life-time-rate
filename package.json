@@ -2,12 +2,18 @@
   "name": "life-time-rate",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
+  "main": "build/electron/main.js",
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.3",
     "@reduxjs/toolkit": "^1.7.2",
+    "@types/electron-devtools-installer": "^2.2.1",
+    "electron-devtools-installer": "^3.2.0",
+    "electron-is-dev": "^2.0.0",
+    "electron-reload": "^2.0.0-alpha.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
@@ -23,13 +29,21 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^18.0.0",
+    "electron-builder": "^22.14.13",
     "react-scripts": "5.0.0",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "wait-on": "^6.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "postinstall": "electron-builder install-app-deps",
+    "electron:dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
+    "electron:build": "yarn build && tsc -p electron && electron-builder",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
