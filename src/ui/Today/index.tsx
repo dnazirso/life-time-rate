@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useAppDispatch } from "../../core/Store";
-import { setImg } from "../../core/Store/imageUploadSlice";
 
 const Input = styled("input")({
   display: "none",
@@ -19,6 +18,7 @@ const Input = styled("input")({
 
 export default function Today() {
   const dispatch = useAppDispatch();
+  const [image, setImage] = useState<Object>();
 
   const [value, setValue] = useState<number>(50);
 
@@ -58,20 +58,21 @@ export default function Today() {
                 id="outlined-button-file"
                 multiple
                 type="file"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  if (event.target.files){
+                    console.log(typeof(event.target.files[0]), event.target.files[0] );
+                    setImage(event.target.files[0])
+                  }
+                }}
               />
-              {({ getImgFile }: { getImgFile: any }) => (
-                <Button
-                  variant="contained"
-                  component="span"
-                  onClick={() => {
-                    const payload = getImgFile();
-                    if (!payload) return payload;
-                    dispatch(setImg(payload));
-                  }}
-                >
-                  Upload
-                </Button>
-              )}
+              
+              <Button
+                variant="contained"
+                component="span"
+              >
+                Upload
+              </Button>
+              
             </label>
             <Button variant="outlined" color="primary">
               Log
