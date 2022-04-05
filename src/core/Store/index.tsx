@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import appSlice from "./appSlice";
+import weeksColor from "./weeksColor";
 import weeksSlice from "./weeksSlice";
 import yearsSlice from "./yearsSlice";
 import cameraSlice from "./cameraSlice";
@@ -11,6 +12,7 @@ export const store = configureStore({
     app: appSlice,
     years: yearsSlice,
     weeks: weeksSlice,
+    weeksColor: weeksColor,
   },
 });
 
