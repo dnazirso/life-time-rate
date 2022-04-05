@@ -41,40 +41,43 @@ export default function Login() {
     user.name.length > 0 && user.birthdate !== new Date("10/10/1910").getTime();
 
   return (
-    <Stack component="form" noValidate spacing={3}>
+
+    <>
       <Camera />
-      <TextField
-        placeholder="Name"
-        label="Name"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={(e) => {
-          setUser({ ...user, name: e.target.value });
-        }}
-      />
-      <TextField
-        id="date"
-        type="date"
-        label="Birthdate"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={(e) => {
-          setUser({
-            ...user,
-            birthdate: new Date(e.target.value).getTime(),
-          });
-        }}
-      />
-      <Button
-        disabled={!canContinue}
-        onClick={handleLogin}
-        variant="outlined"
-        sx={{ py: 1.75 }}
-      >
-        Login
-      </Button>
-    </Stack>
+      <Stack component="form" noValidate spacing={3}>
+        <TextField
+          placeholder="Name"
+          label="Name"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => {
+            setUser({ ...user, name: e.target.value });
+          }}
+        />
+        <TextField
+          id="date"
+          type="date"
+          label="Birthdate"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => {
+            setUser({
+              ...user,
+              birthdate: new Date(e.target.value).getTime(),
+            });
+          }}
+        />
+        <Button
+          disabled={!canContinue}
+          onClick={handleLogin}
+          variant="outlined"
+          sx={{ py: 1.75 }}
+        >
+          Login
+        </Button>
+      </Stack>
+    </>
   );
 }

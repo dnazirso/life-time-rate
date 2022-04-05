@@ -1,9 +1,9 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Webcam from "react-webcam";
 import { useAppSelector } from "../../core/Store";
 import { setPicture } from "../../core/Store/cameraSlice";
 import { useAppDispatch } from "../../core/Store";
-import './webcam.css'
+import redCircle from '../../assets/red-circle.png'
 
 const videoConstraints = {
   width: 350,
@@ -39,9 +39,11 @@ export default function Camera() {
         ?
         <>
           <img src={photo} width="350" height="200" />
-          <Button variant="contained" onClick={() => {
-            window.location.reload();
-          }}>Reprendre une photo</Button>
+          <Box>
+            <Button variant="contained" onClick={() => {
+              window.location.reload();
+            }}>Reprendre une photo</Button>
+          </Box>
         </>
         :
         <Webcam
@@ -53,29 +55,35 @@ export default function Camera() {
           videoConstraints={videoConstraints}
         >
           {({ getScreenshot }) => (
-            <Button id="bouton-webcam" variant="contained"
-              onClick={() => {
-                startCountDown(3, document.querySelector('#timer'))
-                setTimeout(() => {
-                  const payload = getScreenshot();
-                  if (!payload) return;
-                  dispatch(setPicture(payload));
-                }, 4000);
-              }}
-              style={{
-                marginTop: "-36px",
-                backgroundColor: "black",
-                height: "40px",
-                borderRadius: 0,
-
-              }}
+            <Box sx={{
+              mt: -4,
+              height: "40px",
+            }}
             >
-              <img className="red-circle" src={process.env.PUBLIC_URL + "/red-circle.png"} style={{ width: 30 }} />
-            </Button>
+              <Button fullWidth id="bouton-webcam" variant="contained"
+                onClick={() => {
+                  startCountDown(3, document.querySelector('#timer'))
+                  setTimeout(() => {
+                    const payload = getScreenshot();
+                    if (!payload) return;
+                    dispatch(setPicture(payload));
+                  }, 4000);
+                }}
+                sx={{
+                  backgroundColor: 'black',
+                  '&:hover': {
+                    backgroundColor: 'black',
+                  },
+                  borderRadius: 0,
+                }}
+              >
+                <Box component="img" src={redCircle} sx={{ width: 30, '&:hover': { transform: 'scale(1.1)', transition: '100ms' } }} />
+              </Button>
+            </Box>
           )}
         </Webcam>
       }
-      <h1 id="timer" style={{ fontSize: '4em', textAlign: 'center', color: 'white' }}></h1>
+      <h1 id="timer" sx={{ fontSize: '4em', textAlign: 'center', color: 'white' }}></h1>
     </>
   )
 }
